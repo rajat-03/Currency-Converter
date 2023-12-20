@@ -13,6 +13,15 @@ function InputBox({
 }) {
    const amountInputId = useId()
 
+   const handleAmountChange = (e) =>{
+
+    const newValue = e.target.value;
+    if (newValue.startsWith("0") && newValue !== "0") {
+      e.target.value = newValue.slice(1); // Remove leading zero
+    }
+    onAmountChange && onAmountChange(Number(newValue));
+   }
+
     return (
         <div className={`bg-white p-3 rounded-lg text-sm flex ${className}`}>
             <div className="w-1/2">
@@ -26,7 +35,7 @@ function InputBox({
                     placeholder="Amount"
                     disabled={amountDisable}
                     value={amount}
-                    onChange={(e) => onAmountChange && onAmountChange(Number(e.target.value))}
+                    onChange={handleAmountChange}
                 />
             </div>
             <div className="w-1/2 flex flex-wrap justify-end text-right">
